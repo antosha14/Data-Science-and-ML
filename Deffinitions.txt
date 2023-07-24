@@ -1,5 +1,0 @@
-1) Training sample and 2) Test sample
-
-Feature Scaling. Use to restructure the data
-Normalisation - Every column element minus minimum divided by range. So [0,1]
-Standartisation - Substruct average from every element and divide dy standart diviation. So generaly [3,3]
