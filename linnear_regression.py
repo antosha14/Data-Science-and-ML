@@ -8,7 +8,6 @@ from sklearn.linear_model import LinearRegression
 housing_data_path = "./data/housing.csv"
 housing_data = pd.read_csv(housing_data_path)
 
-housing_data.head()
 
 y=housing_data['median_house_value']
 x=housing_data['total_rooms']
