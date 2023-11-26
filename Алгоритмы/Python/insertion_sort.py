@@ -1,3 +1,5 @@
+from array_generation import generate_array
+
 def ins_sort(k):
     for i in range(1,len(k)):    #since we want to swap an item with previous one, we start from 1
         j = i                    #create i's copy (or not)
@@ -8,5 +10,5 @@ def ins_sort(k):
         k[j] = temp
     return k
 
-output = ins_sort([3,2,4,5,6,7,1,2,43,6543,32,3,4,5,6,2,3,1])
+output = ins_sort(generate_array(100))
 print(output)
