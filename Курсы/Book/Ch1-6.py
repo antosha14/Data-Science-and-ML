@@ -1,3 +1,8 @@
+import math
+import os  # Нужно разобраться со стандартной библиотекой
+import sys
+import time
+
 import numpy as np
 
 # После переменной в интерактивном воркбуке можно поставить вопрос, чтобы получить более подробную информацию о ней
@@ -320,7 +325,7 @@ df = pd.DataFrame(
     index=["a", "b", "c", "d"],
     columns=["one", "two"],
 )
-df.sum()  # returns sums for columns DEFAULT = ACROSS THE ROWS, axis columns = ACROSS THE COLUMNS = for rows
+df.sum()  # returns sums for columns DEFAULT = ACROSS THE ROWS (for column), axis columns = ACROSS THE COLUMNS = for rows
 df.sum(
     axis="index", skipna=False
 )  # Default - if all NA - 0, if 1 NA - its skiped, but with skapna = False its NA, mean needs at least 1 nonNA value
@@ -342,13 +347,174 @@ Passing a Series returns a Series with the correlation value computed for each c
 
 # data.apply(pd.value_counts).fillna(0)
 
-pd.read_csv("examples/ex2.csv", names=names, index_col="message")
-# by default first row will be considered as names of columns
-parsed = pd.read_csv("examples/csv_mindex.csv", index_col=["key1", "key2"])
-result = pd.read_csv("examples/ex3.txt", sep="\s+")
-# if there is more columns than provided in names first column is considered an index
-pd.read_csv("examples/ex4.csv", skiprows=[0, 2, 3])
-# !cat examples/ex5.csv
+#
+#
+#
+# CHAPTER 6 Data Loading
+#
+#
+#
+#
 
-# NaN - NA, NULL, empty string
+# Use names to name columns
+pd.read_csv("examples/ex2.csv", header=None, names=names, index_col="message")
+# by default first row will be considered as names of columns
+
+# hierarchical index
+parsed = pd.read_csv("examples/csv_mindex.csv", index_col=["key1", "key2"])
+
+# If data is separated by nultiple amount of spaces
+# if there is more columns than provided in names first column is considered an index
+result = pd.read_csv("examples/ex3.txt", sep="\s+")
+
+# skiprows to skip rows)
+pd.read_csv("examples/ex4.csv", skiprows=[0, 2, 3])
+
+# NaN - NA, NULL, empty string by default. We can delete default list of NA values with keep_default_na=False parametr
 # The na_values option accepts a sequence of strings to add to the default list of strings recognized as missing:
+result = pd.read_csv("examples/ex5.csv", na_values=["NULL"])
+
+# Different NA sentinels can be specified for each column in a dictionary
+sentinels = {"message": ["foo", "NA"], "something": ["two"]}
+pd.read_csv("examples/ex5.csv", na_values=sentinels, keep_default_na=False)
+
+# to limit rows shown
+pd.options.display.max_rows = 10
+pd.read_csv("examples/ex6.csv", nrows=5)
+
+# to read file in pieces
+chunker = pd.read_csv("examples/ex6.csv", chunksize=1000)
+for piece in chunker:
+    tot = tot.add(piece["key"].value_counts(), fill_value=0)
+tot = tot.sort_values(ascending=False)
+
+# to convert back to original type
+data.to_csv("examples/out.csv", na_rep="NULL")
+
+# With no other options specified, both the row and column labels are written. Both of these can be disabled
+data.to_csv(sys.stdout, index=False, header=False)
+
+# You can also write only a subset of the columns, and in an order of your choosing
+data.to_csv(sys.stdout, index=False, columns=["a", "b", "c"])
+
+# To read csv with standart python
+import csv
+
+f = open("examples/ex7.csv")
+reader = csv.reader(f)
+for line in reader:
+    print(line)
+f.close()
+
+with open("examples/ex7.csv") as f:
+    lines = list(csv.reader(f))
+header, values = lines[0], lines[1:]
+
+data_dict = {h: v for h, v in zip(header, zip(*values))}
+
+
+# We can specify delimeter and other parsing options
+class my_dialect(csv.Dialect):
+    lineterminator = "\n"
+    delimiter = ";"
+    quotechar = '"'
+    quoting = csv.QUOTE_MINIMAL
+
+
+reader = csv.reader(f, dialect=my_dialect)
+reader = csv.reader(f, delimiter="|")
+
+# to write to csv with standart python
+with open("mydata.csv", "w") as f:
+    writer = csv.writer(f, dialect=my_dialect)
+    writer.writerow(("one", "two", "three"))
+    writer.writerow(("1", "2", "3"))
+    writer.writerow(("4", "5", "6"))
+    writer.writerow(("7", "8", "9"))
+
+
+import json
+
+result = json.loads(obj)  # to read json
+asjson = json.dumps(result)  # to convert object to json
+
+# The default options for pandas.read_json assume that each object in the JSON array is a row in the table
+data = pd.read_json("examples/example.json")
+
+
+# XML parsing
+from lxml import objectify
+
+path = "datasets/mta_perf/Performance_MNR.xml"
+with open(path) as f:
+    parsed = objectify.parse(f)
+root = parsed.getroot()
+
+
+data = []
+
+skip_fields = ["PARENT_SEQ", "INDICATOR_SEQ", "DESIRED_CHANGE", "DECIMAL_PLACES"]
+
+for elt in root.INDICATOR:
+    el_data = {}
+    for child in elt.getchildren():
+        if child.tag in skip_fields:
+            continue
+        el_data[child.tag] = child.pyval
+    data.append(el_data)
+perf = pd.DataFrame(data)
+
+# Bytes to disk
+frame.to_pickle("examples/frame_pickle")
+pd.read_pickle("examples/frame_pickle")
+
+# conda install pyarrow to read parquet files
+fec = pd.read_parquet("datasets/fec/fec.parquet")
+
+# Excel files
+# conda install openpyxl xlrd
+xlsx = pd.ExcelFile("examples/ex1.xlsx")
+xlsx.sheet_names
+xlsx.parse(sheet_name="Sheet1")
+xlsx.parse(sheet_name="Sheet1", index_col=0)
+
+# write to excel
+writer = pd.ExcelWriter("examples/ex2.xlsx")
+frame.to_excel(writer, "Sheet1")
+writer.close()
+# or simply
+frame.to_excel("examples/ex2.xlsx")
+
+#
+#
+#
+# HDF5
+#
+#
+#
+
+# conda install pytables
+frame = pd.DataFrame({"a": np.random.standard_normal(100)})
+store = pd.HDFStore("examples/mydata.h5")
+store["obj1"] = frame
+store["obj1_col"] = frame["a"]
+store.put("obj2", frame, format="table")
+store.select("obj2", where=["index >= 10 and index <= 15"])
+# read hdf with pandas
+pd.read_hdf("examples/mydata.h5", "obj3", where=["index < 5"])
+
+
+# conda install requests
+import requests
+
+resp = requests.get(url)
+resp.raise_for_status()
+data = resp.json()
+
+
+# from sql request
+# conda install sqlalchemy
+import sqlalchemy as sqla
+
+db = sqla.create_engine("sqlite:///mydata.sqlite")
+pd.read_sql("SELECT * FROM test", db)
