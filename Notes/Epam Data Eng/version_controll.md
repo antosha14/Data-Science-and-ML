@@ -17,7 +17,7 @@ git push --tags
 MERGING AND PUSHING
 git commit -m 'add thms'
 git fetch #sinchronize but without adding new content of files
-git merge #sinchronize but add new content of files
+git merge #add new content of files
 git pull = fetch and merge
 git remote remove origin
 
@@ -44,7 +44,12 @@ git merge {branchName} # merges current branch with specified branch
 git merge --abort #to stop merging prosess
 git checkout --Xtheirs # to consider others branches commits as right ones (--Xours for our commits)
 git diff # to solve conflicts in git bash
-git revert {SHA1}
+
+git reset HEAD^ # FOR LOCAL BRANCHES TO GO BACK + git push -force
+git reset --soft # to go back to staging area
+git commit --amend -m 'commit message' # To modify existing commit
+
+git revert {SHA1 of commit to get rid of} # FOR REMOTE TO GO BACK
 REBASE - moving pointer to master branch forward (do it only in local branches bc it alters history)
 CHERRY-PICK - used to pull specific commit to the head of the active branch
 
@@ -71,3 +76,4 @@ git blame # to see who made changes to a file
 git bisect # to allocate specific comment with the isue
 git log master..feature # log differences betwin master and feature branches
 git submodule
+git reflog
