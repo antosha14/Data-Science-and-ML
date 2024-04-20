@@ -518,3 +518,6 @@ import sqlalchemy as sqla
 
 db = sqla.create_engine("sqlite:///mydata.sqlite")
 pd.read_sql("SELECT * FROM test", db)
+
+# to get short description of the data
+close_px.info()
