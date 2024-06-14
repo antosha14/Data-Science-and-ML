@@ -147,10 +147,10 @@ def f(group):
 
 
 grouped.apply(f)
-# to not rewamp indexes pass group_keys= False
+# to not revamp indexes pass group_keys= False
 tips.groupby("smoker", group_keys=False).apply(top)
 
-
+    
 frame = pd.DataFrame(
     {"data1": np.random.standard_normal(1000), "data2": np.random.standard_normal(1000)}
 )

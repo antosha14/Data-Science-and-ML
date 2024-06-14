@@ -31,25 +31,29 @@ Books:
    Зорич (стр. 0)
 
 Documentation:
-FastAPI
+
+FastAPI (Little advanced topics left)
 Tensorflow
 Pytorch
 RabbitMQ (Initial DONE)
 Celery (Initial DONE)
 Kubernetes
+Python
+ELK stack
+Prometheus and Grafana
+Sentry SDK
 
 Courses Other:
 
 1. ~~W3 Shcool SQL (Passed)~~
    SQL и Advanced на Leetcode
-2. Math https://www.coursera.org/specializations/mathematics-machine-learning
+2. Math (1/3 1 DONE) https://www.coursera.org/specializations/mathematics-machine-learning
 3. Statistics https://www.coursera.org/learn/stanford-statistics
    Курс 1: https://www.youtube.com/playlist?list=PLUl4u3cNGP60uVBMaoNERc6knT_MgPKS0
    Курс 2: https://www.youtube.com/playlist?list=PLUl4u3cNGP60A3XMwZ5sep719_nh95qOe
 4. ~~Machine Learning A-Z. Udemy (DONE)~~
 5. ~~Python for DS Book. (Passed)~~ https://wesmckinney.com/book/
-6. Machine learning specialisation
-   https://www.coursera.org/specializations/machine-learning-introduction
+6. Machine learning specialisation https://www.coursera.org/specializations/machine-learning-introduction
 7. Deep learning https://www.coursera.org/professional-certificates/tensorflow-in-practice?
 8. Power BI - Udemy
 9. Деплой https://madewithml.com/courses/mlops/
@@ -60,4 +64,9 @@ Courses Other:
 13. ООП: https://www.youtube.com/playlist?list=PLOkVupluCIjvfzQFgjiSQIccKiC-BJXwi
 14. ~~Productive VS code (Done) https://www.youtube.com/watch?v=heXQnM99oAI&list=PLbqV4DdFzk7VhEJAMYrbJ5WGD5QRCzjdo&index=1~~
 
-15. Deep learning AI ...
+15. Deep learning Machine Learning Specialization https://www.coursera.org/specializations/machine-learning-introduction
+16. Deep Learning Specialization https://www.coursera.org/specializations/deep-learning
+17. DeepLearning.AI TensorFlow Developer https://www.coursera.org/professional-certificates/tensorflow-in-practice
+18. TensorFlow: Data and Deployment Specialization https://www.coursera.org/specializations/tensorflow-data-and-deployment
+19. TensorFlow: Advanced Techniques Specialization https://www.coursera.org/specializations/tensorflow-advanced-techniques
+20. Deep learning AI Machine Learning in Production (Week1 Done) https://www.coursera.org/learn/introduction-to-machine-learning-in-production/home/week/1

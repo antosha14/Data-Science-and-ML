@@ -145,7 +145,7 @@ df = pd.DataFrame(
 df.unstack(level="state")
 
 # forming period index with columns
-# pop returns column and simultaneously delets in from df
+# pop returns column and simultaneously deletes in from df
 periods = pd.PeriodIndex(
     year=data.pop("year"), quarter=data.pop("quarter"), name="date"
 )

@@ -65,7 +65,7 @@ ax.legend()
 #
 #
 #
-fig, ax = plt.subplots()
+fig, ax = plt.subplots() 0,  1,  2,  3
 ax.plot(np.random.standard_normal(1000).cumsum(), color="black", label="1")
 ax.plot(np.random.standard_normal(1000).cumsum(), color="red", label="2")
 ax.plot(np.random.standard_normal(1000).cumsum(), color="green", label="_3_")
@@ -123,7 +123,7 @@ ax.add_patch(pgon)
 # Saving to files
 fig.savefig("figpath.svg")
 
-# to eddit global plot parametrs use rc obj
+# to edit global plot parametrs use rc obj
 plt.rc("figure", figsize=(10, 10))
 plt.rcParams  # config could be found here
 plt.rcdefaults()  # resets config to default
@@ -181,7 +181,7 @@ sns.set_palette("Greys_r")
 tips["tip_pct"].plot.hist(bins=50)
 
 
-# Generates distribution graph wich could have generated data
+# Generates distribution graph which could have generated data
 data.plot.density()
 
 comp1 = np.random.standard_normal(200)
